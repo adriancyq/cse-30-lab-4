@@ -1,16 +1,8 @@
 .syntax unified
-
-/* You can put constants in the .data section. Look up how to do it on your own,
- * or come ask us if you're curious!*/
 .data 
 
 
 .text
-
-/* int str_to_int(char * str, int * dest);*/
-/* Return 1 for success and 0 for failure. */
-/* If successful, store the result at the */
-/* location pointed to by "dest" */
 
 .align 8
 .global str_to_int
@@ -65,7 +57,8 @@ traverseString:
 	SUB R6, R4, #48
 
 	@ Add to sum
-	MUL R5, R5, #10
+	MOV R7, #10
+	MUL R5, R5, R7
 	ADD R5, R5, R6
 
 	@ Go to next element 
