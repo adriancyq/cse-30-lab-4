@@ -15,6 +15,16 @@ substring:
     @ Parameters:
     @ R0: char * str1
     @ R1: char * str2 
+    @ 
+    @ Dictionary of Registers:
+    @ R4: letter of shorter string 
+    @ R5: letter of longer string 
+    @ R6: the shorter string 
+    @ R7: the longer string 
+    @ R8: length of first string
+    @ R9: length of second string
+    @ R10: str1
+    @ R11: str2
     @-----------------------
 
     @ Store arguments elsewhere
@@ -35,10 +45,21 @@ substring:
     CMP R8, R9 
 
     @ First one is shorter
-    MOVLT R0, #1
+    MOVLT R6, R10
+    MOVLT R7, R11
 
-    @ Second one is shorter
-    MOVGT R0, #0
+    @ Second one is shorter or equal to the first 
+    MOVGE R6, R11 
+    MOVGE R7, R10
+
+    @ Grab the first letter of the shorter string 
+    LDR R0, [R6]
+
+@ Go through each letter to see if they match 
+@iterateThroughString:
+    
+
+
 
 
     @ put your return value in r0 here:
