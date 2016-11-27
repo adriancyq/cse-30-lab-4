@@ -46,63 +46,59 @@ substring:
     @ Check if the first one is shorter than the second one
     CMP R8, R9 
 
-    @ First one is shorter
+    @ Shorter string in R6, longer string in R7
     MOVLT R6, R10
     MOVLT R7, R11
-
-    @ Switch lengths
-    MOVGE R6, R8
-    MOVGE R8, R9
-    MOVGE R9, R6 
-
-    @ Second one is shorter or equal to the first 
-    MOVGE R6, R11 
+    MOVGE R6, R11
     MOVGE R7, R10
 
-    @ Adjust for 0 index vs 1 index in length 
-    SUB R6, R6, #1 
-    SUB R7, R7, #1 
+    @ Shorter string length assigned to R8
+    MOVGE R0, R9
+    MOVGE R9, R8
+    MOVGE R8, R0
 
-    @ Index to go through each char in the longer string 
+    @ needleIndex == needleLength - 1
+    SUB R8, R8, #1
+
+    @ Iterate through longer string 
     MOV R2, #0
     MOV R3, #0
 
-@ Go through each letter to see if they match 
-iterateThroughString:
+traverseHaystack:
     
-    @ Check that we have not reached end of longer string 
-    CMP R3, R7 
-    BEQ noSubstring
+    @ Iterate through every char in longer string 
+    CMP R3, R9
+    BGE endOfHaystack
 
-    @ Grab the next letter of the shorter string 
-    LDRB R4, [R6, R2, LSL #1]
+    @ Grab chars from both strings 
+    LDRB R4, [R8, R2, LSL #1]
+    LDRB R5, [R9, R3, LSL #1]
 
-    @ Grab the next letter of the longer string 
-    LDRB R5, [R7, R3, LSL #1]
+    @ See if two chars are equal 
+    CMP R4, R5 
+    ADD R3, R3, #1
+    BNE traverseHaystack
 
-    @ Compare the two chars
-    CMP R4, R5
+    @ two chars are equal: all chars in needle match haystack 
+    CMP R2, R8
+    BEQ foundSubstring
 
-    @ If not equal, check the next char in longer string 
-    ADDNE R3, R3, #1
-    BNE iterateThroughString
+    @ two chars are equal: havent yet matched all chars in needle
+    ADD R2, R2, #1
+    B traverseHaystack
 
-    @ Chars equal: Check that we are not done with the smaller string 
-    CMPEQ R2, R8
 
-    @ Go to next char in smaller string 
-    ADDLT R2, R2, #1
-    ADDLT R3, R3, #1
 
-    BLT iterateThroughString
 
-    MOVEQ R0, #1
+
+endOfHaystack:
+    MOV R0, #0
     B end 
 
-noSubstring:
-    MOV R0, #0
+foundSubstring:
+    MOV R0, #1
 
-end: 
+end:
 
     @-----------------------
     @ restore caller's registers
