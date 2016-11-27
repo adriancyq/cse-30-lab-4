@@ -12,7 +12,7 @@ int str_to_int(char * str, int * dest);
 
 int main(int argc, char ** argv) {
     int x;
-    if(str_to_int("123", &x)) {
+    if(str_to_int("-123", &x)) {
         printf("%d\n", x);
     } else {
         printf("Invalid integer string\n");

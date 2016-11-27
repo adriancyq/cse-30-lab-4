@@ -57,6 +57,10 @@ substring:
     MOVGE R9, R8
     MOVGE R8, R0
 
+    @ Check if shorter string is empty 
+    CMP R8, #0 
+    BEQ foundSubstring 
+    
     @ needleIndex == needleLength - 1
     SUB R8, R8, #1
 
