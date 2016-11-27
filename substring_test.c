@@ -6,6 +6,8 @@
 #include "substring.h"
 
 int main() {
-    	printf("Is the first one shorter: %d.\n", substring("hello", "hi"));
+    	printf("substring: %d.\n", substring("hello", "hi"));
+    	printf("substring: %d.\n", substring("hello", "he"));
+    	printf("substring: %d.\n", substring("he", "hello"));
 	return 0;
 }
