@@ -60,19 +60,20 @@ substring:
     @ needleIndex == needleLength - 1
     SUB R8, R8, #1
 
-    @ Iterate through longer string 
+    @ Iterate through longer string
     MOV R2, #0
     MOV R3, #0
 
 traverseHaystack:
-    
-    @ Iterate through every char in longer string 
-    CMP R3, R9
-    BGE endOfHaystack
 
-    @ Grab chars from both strings 
-    LDRB R4, [R8, R2, LSL #1]
-    LDRB R5, [R9, R3, LSL #1]
+    @ Iterate through every char
+    CMP R3, R9
+    
+    BEQ endOfHaystack
+
+@ Grab chars from both strings 
+    LDRB R4, [R8, R2]
+    LDRB R5, [R9, R3]
 
     @ See if two chars are equal 
     CMP R4, R5 
@@ -87,10 +88,6 @@ traverseHaystack:
     ADD R2, R2, #1
     B traverseHaystack
 
-
-
-
-
 endOfHaystack:
     MOV R0, #0
     B end 
@@ -98,8 +95,7 @@ endOfHaystack:
 foundSubstring:
     MOV R0, #1
 
-end:
-
+end:    
     @-----------------------
     @ restore caller's registers
     pop {r4-r11, ip, lr}
