@@ -72,8 +72,8 @@ traverseHaystack:
     BEQ endOfHaystack
 
 @ Grab chars from both strings 
-    LDRB R4, [R8, R2]
-    LDRB R5, [R9, R3]
+    LDRB R4, [R6, R2]
+    LDRB R5, [R7, R3]
 
     @ See if two chars are equal 
     CMP R4, R5 
