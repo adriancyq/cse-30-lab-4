@@ -13,52 +13,62 @@
 .type binary_search_ARM, %function
 
 binary_search_ARM:
+
+    @ Binary search in a sorted array 
+
+    @ Parameters:
+    @ R0: * data
+    @ R1: toFind
+    @ R2: start
+    @ R3: end
+
+    @ Dictionary of Registers 
+    @ R4: mid
+    @ R5: data[mid]
+
     @ We need to save away a bunch of registers
-    push    {r4-r11, ip, lr}
-    @ May need to decrement stack pointer for more stack space
-    SUB SP, SP, #8
+    push {r4-r11, ip, lr}
 
+    @ Store all parameters in the stack
+    SUB SP, SP, #16
+
+    @ Midpoint 
+    SUB R4, R3, R2 
+    ASR R4, R4, #1          
+    ADD R4, R4, R2          @ mid = start + (end - start)/2
+
+    @ Terminating condition: if start > end 
     @compare start and end
-    CMP R1, R2
+    CMP R2, R3
 
-    @branch to false declaration to make return value =1
+    @ branch to false declaration to make return value =1
     BGT falseDec
 
-    @store stack pointer in R1
-    STR R1, [SP]
-
-    @store second 4 bytes of SP in R2
-    STR R2, [sp, #4]
-
-    @int mid = start + (end - start)/2;
-    @int mid = R6
-    SUB R6, R2, R1
-    ASR R6, R6, #1
-    ADD R6, R6, R1
+    @ data[mid]
+    LDR R5, [R0, R4, LSL #2]
 
     @data[mid] == toFind
-    LDR R5, [R0, R6, LSL#2]
+    CMP R5, R1
+    MOVEQ R0, R4        @ return mid
+    BEQ foundElement
 
-    @data[mid] > toFind
-    CMP R5, R3
-    MOVEQ R0, R6
-    BEQ return 
+    @ else if data[mid] > toFind
+    SUBGT R3, R4, #1
 
-    @if greater than subtract 1
-    SUBGT R2, R6, #1
-
-    @if less than add 1
-    ADDLT R1, R6, #1
+    @ else if data[mid] < toFind
+    ADDLT R2, R4, #1
 
     BL binary_search_ARM
-    B return
+    B foundElement
 
-    @make return value -1
-    falseDec:
-    	MOV R0, #-1
-    @return 0
-    return:
-    	MOV R0, #0
+@make return value -1
+falseDec:
+	MOV R0, #-1
+
+foundElement:
+    ADD SP, SP, #16
+
+
     @ Remember to restore the stack pointer before popping!
     @ This handles restoring registers and returning
     pop     {r4-r11, ip, pc}
