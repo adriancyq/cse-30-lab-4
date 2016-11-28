@@ -1,14 +1,11 @@
 .syntax unified
 
-/* You can put constants in the .data section. Look up how to do it on your own,
- * or come ask us if you're curious!*/
+
 .data 
 
 
 .text
 
-/*int binary_search_ARM(int * data, int toFind, int start, int end)*/
-/*Note that you return your value in r0*/
 
 .align 8
 .global binary_search_ARM
@@ -27,35 +24,41 @@ binary_search_ARM:
     @branch to false declaration to make return value =1
     BGT falseDec
 
-    @data[mid] == toFind
+    @store stack pointer in R1
     STR R1, [SP]
-    
-  	
+
+    @store second 4 bytes of SP in R2
     STR R2, [sp, #4]
 
+    @int mid = start + (end - start)/2;
+    @int mid = R6
     SUB R6, R2, R1
     ASR R6, R6, #1
     ADD R6, R6, R1
 
+    @data[mid] == toFind
     LDR R5, [R0, R6, LSL#2]
 
+    @data[mid] > toFind
     CMP R5, R3
     MOVEQ R0, R6
     BEQ return 
 
+    @if greater than subtract 1
     SUBGT R2, R6, #1
 
+    @if less than add 1
     ADDLT R1, R6, #1
 
     BL binary_search_ARM
     B return
 
+    @make return value -1
     falseDec:
     	MOV R0, #-1
+    @return 0
     return:
-    /* You should probably do something here */
-
-    mov r0, #0
+    	MOV R0, #0
     @ Remember to restore the stack pointer before popping!
     @ This handles restoring registers and returning
     pop     {r4-r11, ip, pc}
