@@ -31,6 +31,10 @@ binary_search_ARM:
 
     @ Store all parameters in the stack
     SUB SP, SP, #16
+    STR R0, [SP]  @store *data into stack
+    STR R1, [SP, #4]  @store toFind in stack
+    STR R2, [SP, #8]   @store start in stack
+    STR R3, [SP, #12]   @store end in stack
 
     @ Midpoint 
     SUB R4, R3, R2 
@@ -72,7 +76,7 @@ foundElement:
     @ Remember to restore the stack pointer before popping!
     @ This handles restoring registers and returning
     pop     {r4-r11, ip, pc}
-
+    
 .endfunc
 
 .end
