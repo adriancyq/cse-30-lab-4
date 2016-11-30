@@ -126,7 +126,8 @@ majority_count_ARM:
 	MOV R4, R0 				@ retval of left majority count 
 
 	@ RIGHT: majority_count(arr+len/2, len-len/2, &right_majority);
-	ADD R0, R5, LSL #2
+	LSL R5, R5, #2
+	ADD R0, R9, R5
 	SUB R1, R10, R5 
 	ADD R2, SP, #4
 	BL majority_count_ARM
@@ -177,7 +178,9 @@ singleElement:
 	MOV R0, #1
 
 end:
-    
+	@ Deallocate stack 
+    ADD SP, SP, #8
+
     @ This handles restoring registers and returning
     pop {r4-r11, ip, pc}
 
