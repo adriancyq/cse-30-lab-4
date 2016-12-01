@@ -126,22 +126,22 @@ recursion:
 	@ Call majority count on left half of array 
 	MOV R0, R9
 	MOV R1, R5
-	MOV R2, SP 
+	ADD R2, SP, #4 
 	BL majority_count_ARM
 
 	@ Load left_majority and save return value 
-	LDR R6, [SP]
+	LDR R6, [SP, #4]
 	MOV R4, R0 
 
 	@ Call majority_count on right half of array 
 	LSL R0, R5, #2
 	ADD R0, R0, R9 									@ arr+ len/2
 	SUB R1, R10, R5
-	ADD R2, SP, #4
+	MOV R2, SP
 	BL majority_count_ARM
 
 	@ Load right_majority and save return value 
-	LDR R7, [SP, #4]
+	LDR R7, [SP]
 	MOV R8, R0 
 
 	@ Deallocate space on stack 
