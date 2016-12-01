@@ -76,8 +76,8 @@ finishedCounting:
 @ Dictionary of Registers:
 @ R4: retval of left majority count 
 @ R5: len /2 
-@ R6: &left majority 
-@ R7: &right majority 
+@ R6: left majority on stack
+@ R7: right majority on stack
 @ R8: arr[0], retval of right majority count 
 @ R9: arr 
 @ R10: len 
@@ -112,6 +112,30 @@ majority_count_ARM:
     STREQ R8, [R11] 								@ *result = arr[0]
     BEQ singleElement 
 
+
+
+@ List has more than 1 item, requires recursion:
+recursion:
+	
+	@ Get length of half the array 
+	ASR R5, R10, #1
+
+	@ Allocate space on the stack for left and right majority 
+	SUB SP, SP, #8
+
+	@ Call majority count on left half of array 
+	MOV R0, R9
+	MOV R1, R5
+	MOV R2, SP 
+	BL majority_count_ARM
+
+	@ Load left_majority
+	LDR R6, [SP]
+
+	@ Deallocate space on stack 
+	ADD SP, SP, #8
+	MOV R0, R6
+	B end 
 
 @ Return 0 if list is empty 
 emptyList:

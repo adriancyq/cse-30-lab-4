@@ -16,17 +16,17 @@ int main(int argc, char ** argv) {
 	int listThree[] = {13, 13};
 	int listThreeMajority;
 
-	Testing on an empty list
+	//Testing on an empty list
 	assert(majority_count_ARM(listOne, 0, &listOneMajority) == 0);
 	printf("Passed test for empty list.\n");
 
-	Testing on list with single element 
+	//Testing on list with single element 
 	assert(majority_count_ARM(listTwo, 1, &listTwoMajority) == 1);
 	assert(listTwoMajority == 2);
 	printf("Passed test for list with one item.\n");
 
-	int ccount = majority_count_ARM(listThree, 4, &listThreeMajority);
-	printf("The count: %d\n", ccount);
+	int ccount = majority_count_ARM(listThree, 2, &listThreeMajority);
+	printf("The count: %d\nThe majority: %d\n", ccount, listThreeMajority);
 
     return 0;
 }
