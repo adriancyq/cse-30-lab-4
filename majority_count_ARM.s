@@ -161,10 +161,9 @@ checkLeftMajority:
 
 	@ if (c > len/2)
 	CMP R0, R5
-	STREQ R6, [R11]
-	MOVEQ R0, R6 
-	ADDEQ SP, SP, #8
-	BEQ end 
+	STRGT R6, [R11] 
+	ADDGT SP, SP, #8
+	BGT end 
 
 
 
@@ -182,10 +181,9 @@ checkRightMajority:
 
 	@ if (c > len/2)
 	CMP R0, R5
-	STREQ R7, [R11]
-	MOVEQ R0, R7
-	ADDEQ SP, SP, #8
-	BEQ end 
+	STRGT R7, [R11]
+	ADDGT SP, SP, #8
+	BGT end 
 
 
 
