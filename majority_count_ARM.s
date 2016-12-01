@@ -110,10 +110,11 @@ majority_count_ARM:
     @ Get the only element in the array and store in result 
     LDREQ R8, [R9] 			@ arr[0]
     STREQ R8, [R11] 		@ *result = arr[0]
+    
+	SUB SP, SP, #8
     BEQ singleElement 
 
 	@ Allocate space on the stack for left and right majority 
-	SUB SP, SP, #8
 
 	@ Calculate len/2
 	ASR R5, R10, #1 		@ len / 2
@@ -177,10 +178,9 @@ emptyList:
 singleElement:
 	MOV R0, #1
 
-end:
 	@ Deallocate stack 
     ADD SP, SP, #8
-
+end:
     @ This handles restoring registers and returning
     pop {r4-r11, ip, pc}
 

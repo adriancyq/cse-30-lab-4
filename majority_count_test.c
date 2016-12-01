@@ -8,6 +8,10 @@
 int main(int argc, char ** argv) {
 
     int data[] = {0, 0, 0, 1};
+    int sec[] = {5};
+    int maj;
+    int sec_count = majority_count_ARM(sec, 1, &maj);
+    printf("Majority on empty list: %d, %d\n", sec_count, maj);
     int c_majority, arm_majority;
     int c_count = majority_count(data, 4, &c_majority);
     int arm_count = majority_count_ARM(data, 4, &arm_majority);
