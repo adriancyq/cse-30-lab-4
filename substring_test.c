@@ -9,5 +9,6 @@ int main() {
     	printf("substring: %d.\n", substring("helloo", "hi"));
     	printf("substring: %d.\n", substring("hellooo", "hel"));
     	printf("substring: %d.\n", substring("hell", "helloooo"));
+    	printf("substring: %d.\n", substring("holaaaa", "hol"));
 	return 0;
 }
