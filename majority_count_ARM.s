@@ -129,12 +129,24 @@ recursion:
 	MOV R2, SP 
 	BL majority_count_ARM
 
-	@ Load left_majority
+	@ Load left_majority and save return value 
 	LDR R6, [SP]
+	MOV R4, R0 
+
+	@ Call majority_count on right half of array 
+	LSL R0, R5, #2
+	ADD R0, R0, R9 									@ arr+ len/2
+	SUB R1, R10, R5
+	ADD R2, SP, #4
+	BL majority_count_ARM
+
+	@ Load right_majority and save return value 
+	LDR R7, [SP, #4]
+	MOV R8, R0 
 
 	@ Deallocate space on stack 
 	ADD SP, SP, #8
-	MOV R0, R6
+	MOV R0, R7
 	B end 
 
 @ Return 0 if list is empty 
