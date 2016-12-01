@@ -144,10 +144,60 @@ recursion:
 	LDR R7, [SP]
 	MOV R8, R0 
 
+
+
+@ Done recursing, call count on left/right majority 
+checkLeftMajority:
+	
+	@ if (left_majority_count)
+	CMP R4, #0
+	BEQ noMajority 
+
+	@ call count with left majority 
+	MOV R0, R9
+	MOV R1, R10
+	MOV R2, R6
+	BL count_ARM 
+
+	@ if (c > len/2)
+	CMP R0, R5
+	STREQ R6, [R11]
+	MOVEQ R0, R6 
+	ADDEQ SP, SP, #8
+	BEQ end 
+
+
+
+checkRightMajority:
+	
+	@ if (right_majority_count)
+	CMP R8, #0
+	BEQ noMajority
+
+	@ call count with right majority 
+	MOV R0, R9
+	MOV R1, R10
+	MOV R2, R7
+	BL count_ARM 
+
+	@ if (c > len/2)
+	CMP R0, R5
+	STREQ R7, [R11]
+	MOVEQ R0, R7
+	ADDEQ SP, SP, #8
+	BEQ end 
+
+
+
+noMajority:
+	
+	@ Return 0
+	MOV R0, #0
+
 	@ Deallocate space on stack 
 	ADD SP, SP, #8
-	MOV R0, R7
-	B end 
+	B end
+
 
 @ Return 0 if list is empty 
 emptyList:

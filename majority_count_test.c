@@ -13,7 +13,7 @@ int main(int argc, char ** argv) {
 	int listTwo[] = {2};
 	int listTwoMajority;
 
-	int listThree[] = {13, 14};
+	int listThree[] = {13, 13};
 	int listThreeMajority;
 
 	//Testing on an empty list
