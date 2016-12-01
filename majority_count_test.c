@@ -24,7 +24,7 @@ int main(int argc, char ** argv) {
     printf("ARM Majority Count  : %d\n", arm_count);
     printf("ARM Majority Element: %d\n", arm_majority);
 
-      printf("C   Majority Count  : %d\n", c_count2);
+    printf("C   Majority Count  : %d\n", c_count2);
     printf("C   Majority Element: %d\n", c_majority2);
     printf("ARM Majority Count  : %d\n", arm_count2);
     printf("ARM Majority Element: %d\n", arm_majority2);
