@@ -145,7 +145,7 @@ majority_count_ARM:
 	MOV R0, R9
 	MOV R1, R10 
 	MOV R2, R4 
-	BL count 
+	BL count_ARM 
 
 	@ Check if left majority occurs in more than half the elements 
 	CMP R0, R5
@@ -156,7 +156,7 @@ majority_count_ARM:
 	MOV R0, R9
 	MOV R1, R10 
 	MOV R2, R8
-	BL count 
+	BL count_ARM
 
 	@ Check if right majority occurs in more than half the elements 
 	CMP R0, R5
