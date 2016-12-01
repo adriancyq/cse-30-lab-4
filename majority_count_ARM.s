@@ -95,79 +95,83 @@ majority_count_ARM:
     @ We need to save away a bunch of registers
     push {r4-r11, ip, lr}
 
-    @ Check if list is empty 
+    @ Check if list is empty: if (len == 0)
     CMP R1, #0
     BEQ emptyList
 
     @ Store parameters elsewhere 
-    MOV R9, R0 				@ arr 
-    MOV R10, R1 			@ len 
-    MOV R11, R2 			@ result 
+    MOV R9, R0 										@ arr 
+    MOV R10, R1 									@ len 
+    MOV R11, R2 									@ result 
 
-    @ Base case: Check if list only has one element 
+    @ Check if list only has one element: if (len == 1)
     CMP R10, #1 
 
     @ Get the only element in the array and store in result 
-    LDREQ R8, [R9] 			@ arr[0]
-    STREQ R8, [R11] 		@ *result = arr[0]
-    
-	SUB SP, SP, #8
+    LDREQ R8, [R9] 									@ arr[0]
+    STREQ R8, [R11] 								@ *result = arr[0]
     BEQ singleElement 
 
 	@ Allocate space on the stack for left and right majority 
+	SUB SP, SP, #8
 
 	@ Calculate len/2
 	ASR R5, R10, #1 		@ len / 2
 
-	@ LEFT: majority_count(arr, len/2, &left_majority);
-	MOV R0, R9  			@ arr 
-	MOV R1, R5		 		@ len/2
-	MOV R2, SP 				@ &left_majority 
-	BL majority_count_ARM 
-	MOV R4, R0 				@ retval of left majority count 
+; 	@ LEFT: majority_count(arr, len/2, &left_majority);
+; 	MOV R0, R9  			@ arr 
+; 	MOV R1, R5		 		@ len/2
+; 	MOV R2, SP 				@ &left_majority 
+; 	BL majority_count_ARM 
+; 	MOV R4, R0 				@ retval of left majority count 
 
-	@ RIGHT: majority_count(arr+len/2, len-len/2, &right_majority);
-	LSL R5, R5, #2
-	ADD R0, R9, R5
-	SUB R1, R10, R5 
-	ADD R2, SP, #4
-	BL majority_count_ARM
-	MOV R8, R0 
+; 	@ RIGHT: majority_count(arr+len/2, len-len/2, &right_majority);
+; 	LSL R5, R5, #2
+; 	ADD R0, R9, R5
+; 	SUB R1, R10, R5 
+; 	ADD R2, SP, #4
+; 	BL majority_count_ARM
+; 	MOV R8, R0 
 
-	@ Check if there was a left majority 
-	CMP R4, #0
-	BEQ noMajority 
+; 	@ Check if there was a left majority 
+; 	CMP R4, #0
+; 	BEQ noMajority 
 
-	@ Check if there was a right majority 
-	CMP R8, #0
-	BEQ noMajority 
+; 	@ Check if there was a right majority 
+; 	CMP R8, #0
+; 	BEQ noMajority 
 
-	@ Get the count of left majority 
-	MOV R0, R9
-	MOV R1, R10 
-	MOV R2, R4 
-	BL count_ARM 
+; 	@ Get the count of left majority 
+; 	MOV R0, R9
+; 	MOV R1, R10 
+; 	MOV R2, R4 
+; 	BL count_ARM 
 
-	@ Check if left majority occurs in more than half the elements 
-	CMP R0, R5
-	STRGT R0, [R11]
-	BGT end 
+; 	@ Check if left majority occurs in more than half the elements 
+; 	CMP R0, R5
+; 	STRGT R0, [R11]
+; 	BGT end 
 
-	@ Get the count of right majority 
-	MOV R0, R9
-	MOV R1, R10 
-	MOV R2, R8
-	BL count_ARM
+; 	@ Get the count of right majority 
+; 	MOV R0, R9
+; 	MOV R1, R10 
+; 	MOV R2, R8
+; 	BL count_ARM
 
-	@ Check if right majority occurs in more than half the elements 
-	CMP R0, R5
-	STRGT R0, [R11]
-	BGT end 
+; 	@ Check if right majority occurs in more than half the elements 
+; 	CMP R0, R5
+; 	STRGT R0, [R11]
+; 	BGT end 
 
-@ Return 0 if no majority 
-noMajority: 
-	MOV R0, #0 
-	B end 
+; @ Return 0 if no majority 
+; noMajority: 
+	
+; 	@ Deallocate stack 
+    ADD SP, SP, #8
+
+;   @ Return 0
+; 	MOV R0, #0 
+; 	B end 
 
 @ Return 0 if list is empty 
 emptyList:
@@ -177,9 +181,7 @@ emptyList:
 @ Single element in array, count is 1
 singleElement:
 	MOV R0, #1
-
-	@ Deallocate stack 
-    ADD SP, SP, #8
+	
 end:
     @ This handles restoring registers and returning
     pop {r4-r11, ip, pc}
