@@ -7,26 +7,27 @@
 #include "majority_count.h"
 
 int main(int argc, char ** argv) {
-	int listOne[] = {};
-	int listOneMajority;
 
-	int listTwo[] = {2};
-	int listTwoMajority;
+    int data[] = {0, 0, 0, 1};
+    int data2[] = {1, 2, 3, 4};
 
-	int listThree[] = {13, 13};
-	int listThreeMajority;
+    int c_majority, arm_majority;
+    int c_count = majority_count(data, 4, &c_majority);
+    int arm_count = majority_count_ARM(data, 4, &arm_majority);
 
-	//Testing on an empty list
-	assert(majority_count_ARM(listOne, 0, &listOneMajority) == 0);
-	printf("Passed test for empty list.\n");
+    int c_majority2, arm_majority2;
+    int c_count2 = majority_count(data2, 4, &c_majority2);
+    int arm_count2 = majority_count_ARM(data2, 4, &arm_majority2);
 
-	//Testing on list with single element 
-	assert(majority_count_ARM(listTwo, 1, &listTwoMajority) == 1);
-	assert(listTwoMajority == 2);
-	printf("Passed test for list with one item.\n");
+    printf("C   Majority Count  : %d\n", c_count);
+    printf("C   Majority Element: %d\n", c_majority);
+    printf("ARM Majority Count  : %d\n", arm_count);
+    printf("ARM Majority Element: %d\n", arm_majority);
 
-	int ccount = majority_count_ARM(listThree, 2, &listThreeMajority);
-	printf("The count: %d\nThe majority: %d\n", ccount, listThreeMajority);
+      printf("C   Majority Count  : %d\n", c_count2);
+    printf("C   Majority Element: %d\n", c_majority2);
+    printf("ARM Majority Count  : %d\n", arm_count2);
+    printf("ARM Majority Element: %d\n", arm_majority2);
 
     return 0;
 }
