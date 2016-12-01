@@ -48,7 +48,7 @@ forLoop:
 	CMP R10, R2 
 	ADDEQ R11, R11, #1 			@ ret_count++
 	ADD R4, R4, #1				@ index++
-	BNE forLoop
+	B forLoop
 
 @ Looped through desired section of array
 finishedCounting:

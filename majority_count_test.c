@@ -8,7 +8,6 @@
 int main(int argc, char ** argv) {
 
     int data[] = {0, 0, 0, 1};
-
     int c_majority, arm_majority;
     int c_count = majority_count(data, 4, &c_majority);
     int arm_count = majority_count_ARM(data, 4, &arm_majority);
