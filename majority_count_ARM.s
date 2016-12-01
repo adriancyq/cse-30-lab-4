@@ -169,13 +169,13 @@ majority_count_ARM:
 ; 	@ Deallocate stack 
     ADD SP, SP, #8
 
-;   @ Return 0
+;    @ Return 0
 ; 	MOV R0, #0 
 ; 	B end 
 
 @ Return 0 if list is empty 
 emptyList:
-	MOV R0, #0
+	MOV R0, R5
 	B end 
 
 @ Single element in array, count is 1

@@ -18,12 +18,12 @@ int main(int argc, char ** argv) {
 
 	// Testing on an empty list
 	assert(majority_count_ARM(listOne, 0, &listOneMajority) == 0);
-	printf("Passed test for empty list.");
+	printf("Passed test for empty list.\n");
 
 	// Testing on list with single element 
 	assert(majority_count_ARM(listTwo, 1, &listTwoMajority) == 1);
 	assert(listTwoMajority == 2);
-	printf("Passed test for list with one item.");
+	printf("Passed test for list with one item.\n");
 
     // int data[] = {0, 0, 0, 1};
     // int c_majority, arm_majority;
