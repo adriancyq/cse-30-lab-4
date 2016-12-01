@@ -112,66 +112,6 @@ majority_count_ARM:
     STREQ R8, [R11] 								@ *result = arr[0]
     BEQ singleElement 
 
-	@ Allocate space on the stack for left and right majority 
-	SUB SP, SP, #8
-
-	@ Calculate len/2
-	ASR R5, R10, #1 		@ len / 2
-
- 	@ LEFT: majority_count(arr, len/2, &left_majority);
- 	MOV R0, R9  			@ arr 
- 	MOV R1, R5		 		@ len/2
- 	MOV R2, SP 				@ &left_majority 
- 	BL majority_count_ARM 
- 	MOV R4, R0 				@ retval of left majority count 
-
- 	; @ RIGHT: majority_count(arr+len/2, len-len/2, &right_majority);
- 	; LSL R5, R5, #2
- 	; ADD R0, R9, R5
- 	; SUB R1, R10, R5 
- 	; ADD R2, SP, #4
- 	; BL majority_count_ARM
- 	; MOV R8, R0 
-
- 	; @ Check if there was a left majority 
- 	; CMP R4, #0
- 	; BEQ noMajority 
-
- 	; @ Check if there was a right majority 
- 	; CMP R8, #0
- 	; BEQ noMajority 
-
- 	; @ Get the count of left majority 
- 	; MOV R0, R9
- 	; MOV R1, R10 
- 	; MOV R2, R4 
- 	; BL count_ARM 
-
- 	; @ Check if left majority occurs in more than half the elements 
- 	; CMP R0, R5
- 	; STRGT R0, [R11]
- 	; BGT end 
-
- 	; @ Get the count of right majority 
- 	; MOV R0, R9
- 	; MOV R1, R10 
- 	; MOV R2, R8
- 	; BL count_ARM
-
- 	; @ Check if right majority occurs in more than half the elements 
- 	; CMP R0, R5
- 	; STRGT R0, [R11]
- 	; BGT end 
-
- @ Return 0 if no majority 
- noMajority: 
-	
- 	@ Deallocate stack 
-    ADD SP, SP, #8
-
-    @ Return 0
- 	MOV R0, R4 
- 	B end 
 
 @ Return 0 if list is empty 
 emptyList:
