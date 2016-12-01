@@ -17,14 +17,16 @@ int main(int argc, char ** argv) {
 	int listThreeMajority;
 
 	// Testing on an empty list
-	assert(majority_count_ARM(listOne, 0, &listOneMajority) == 0);
-	printf("Passed test for empty list.\n");
+	//assert(majority_count_ARM(listOne, 0, &listOneMajority) == 0);
+	//printf("Passed test for empty list.\n");
 
 	// Testing on list with single element 
-	assert(majority_count_ARM(listTwo, 1, &listTwoMajority) == 1);
-	assert(listTwoMajority == 2);
-	printf("Passed test for list with one item.\n");
-
+	//assert(majority_count_ARM(listTwo, 1, &listTwoMajority) == 1);
+	//assert(listTwoMajority == 2);
+	//printf("Passed test for list with one item.\n");
+	int ccount = majority_count_ARM(listThree, 4, &listThreeMajority);
+	printf("The count: %d\n", ccount);
+	
     // int data[] = {0, 0, 0, 1};
     // int c_majority, arm_majority;
     // int c_count = majority_count(data, 4, &c_majority);
